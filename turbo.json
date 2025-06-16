@@ -1,0 +1,28 @@
+{
+  "$schema": "https://turborepo.org/schema.json",
+  "extends": ["//"],
+  "tasks": {
+    "build": {
+      // Make turbo cache the dist/* output for the build task
+      // [acme] Remove the "../acme-..." path if not using React 18 wrappers.
+      // [acme] Otherwise, update the path
+      "outputs": ["dist/**", "../acme-components-react/src/components.ts"]
+    },
+    "build-dev": {
+      "outputs": ["dist/**", "../acme-components-react/src/components.ts"]
+    },
+    "disabled-build-external-storybook": {
+      // Make turbo run the build task before storybook build
+      "dependsOn": ["build"]
+    },
+    "disabled-start-external-storybook": {
+      "dependsOn": ["build-dev"]
+    },
+    "build-internal-storybook": {
+      "dependsOn": ["build"]
+    },
+    "start-internal-storybook": {
+      "dependsOn": ["build-dev"]
+    }
+  }
+}

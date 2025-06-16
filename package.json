@@ -1,0 +1,87 @@
+{
+  "name": "toggle-button",
+  "version": "0.0.1",
+  "description": "A new Lumina components project",
+  "scripts": {
+    "start": "vite",
+    "start-internal-storybook": "storybook dev -c .storybook/internal -p 6007 --quiet",
+    "disabled-start-external-storybook": "storybook dev -c .storybook/external dev -p 6017 --quiet",
+    "build": "vite build",
+    "build-dev": "vite build --mode development",
+    "watch": "yarn build-dev --watch",
+    "build-internal-storybook": "storybook build -c .storybook/internal --quiet",
+    "disabled-build-external-storybook": "storybook build -c .storybook/external -o storybook-static-external --quiet",
+    "lint": "lint-staged --config lint-staged.config.js",
+    "test-pre": "yarn playwright install --with-deps chromium",
+    "test": "yarn test-pre && vitest run --browser.headless",
+    "test-debug": "vitest run --no-file-parallelism --no-isolate --inspect",
+    "test-watch": "yarn test-pre && vitest",
+    "clean": "rimraf ./node_modules ./storybook-static ./storybook-static-external ./turbo ./dist"
+  },
+  "type": "module",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": "./dist/index.js",
+    "./loader": "./dist/loader.js",
+    "./package.json": "./package.json",
+    "./components/*/customElement": "./dist/components/*/customElement.js",
+    "./components/*": "./dist/components/*/index.js",
+    "./types/*": "./dist/types/*.d.ts",
+    "./docs/*": "./dist/docs/*",
+    "./cdn/index.css": "./dist/cdn/main.css"
+  },
+  "files": [
+    "dist/"
+  ],
+  "publishConfig": {
+    "registry": "https://olympus.esri.com/artifactory/api/npm/npm-arcgis-local/",
+    "access": "public"
+  },
+  "license": "SEE LICENSE IN LICENSE.md",
+  "dependencies": {
+    "@arcgis/components-utils": ">=4.34.0-next <4.35.0",
+    "@arcgis/lumina": ">=4.34.0-next <4.35.0",
+    "@arcgis/typescript-config": "^4.32.14",
+    "tslib": "^2.8.1"
+  },
+  "devDependencies": {
+    "@arcgis/core": ">=4.34.0-next <4.35",
+    "@arcgis/eslint-config": ">=4.34.0-next <4.35.0",
+    "@arcgis/lumina-compiler": ">=4.34.0-next <4.35.0",
+    "@esri/calcite-components": "^3.2.1",
+    "@testing-library/dom": "^10.4.0",
+    "@types/node": "^22.0.0",
+    "@vitest/browser": "^3.1.3",
+    "@vitest/coverage-v8": "^3.1.3",
+    "eslint": "^9.23.0",
+    "eslint-gitignore": "^0.1.0",
+    "lint-staged": "^15.1.0",
+    "playwright": "^1.52.0",
+    "prettier": "^3.3.3",
+    "rimraf": "^6.0.1",
+    "storybook": "^8.5.6",
+    "typescript": "~5.8.3",
+    "vite": "^6.3.4",
+    "vitest": "^3.1.3"
+  },
+  "peerDependencies": {
+    "@arcgis/core": ">=4.34.0-next <4.35",
+    "@esri/calcite-components": "^3.2.1"
+  },
+  "css.customData": [
+    "dist/docs/vscode.css-custom-data.json"
+  ],
+  "customElements": "dist/docs/api.json",
+  "html.customData": [
+    "dist/docs/vscode.html-custom-data.json"
+  ],
+  "web-types": "dist/docs/web-types.json",
+  "resolutions": {
+    "@esri/calcite-components/@arcgis/lumina": ">=4.34.0-next <4.35.0",
+    "@esri/calcite-components/@arcgis/components-controllers": ">=4.34.0-next <4.35.0",
+    "@esri/calcite-components/@arcgis/components-utils": ">=4.34.0-next <4.35.0"
+  },
+  "packageManager": "yarn@4.5.1"
+}
