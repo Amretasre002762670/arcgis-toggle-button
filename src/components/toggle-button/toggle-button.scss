@@ -1,0 +1,79 @@
+$on-color: #4CAF50;
+$off-color: #ccc;
+$knob-color: #f2ecec;
+
+:host {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+}
+
+.flip-toggle {
+    display: relative;
+    width: 5rem;
+    height: 30px;
+    background-color: $off-color;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    &:focus-visible {
+        outline: none;
+        border: 1px solid black;
+    }
+
+    &.on {
+        background-color: $on-color;
+    }
+
+    .knob {
+        position: relative;
+        top: 3px;
+        left: 3px;
+        width: 24px;
+        height: 24px;
+        background-color: $knob-color;
+        border-radius: 50%;
+        transition: transform 0.3s ease;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+    }
+
+    &.on .knob {
+        transform: translateX(50px);
+    }
+
+    .label {
+        position: relative;
+        bottom: 80%;
+        transform: translateY(-50%);
+        font-size: 12px;
+        font-weight: bold;
+        color: white;
+    }
+
+    .off-label {
+        right: 15%;
+        opacity: 0;
+        transition: opacity 0.2s;
+    }
+
+    .on-label {
+        left: 70%;
+        opacity: 1;
+        transition: opacity 0.2s;
+    }
+
+    &.on .on-label {
+        opacity: 0;
+    }
+
+    &.on .off-label {
+        opacity: 1;
+    }
+}
+
+
+
+

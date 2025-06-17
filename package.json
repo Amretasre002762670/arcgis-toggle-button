@@ -30,7 +30,8 @@
     "./components/*": "./dist/components/*/index.js",
     "./types/*": "./dist/types/*.d.ts",
     "./docs/*": "./dist/docs/*",
-    "./cdn/index.css": "./dist/cdn/main.css"
+    "./cdn/index.css": "./dist/cdn/main.css",
+    "./main.css": "./dist/cdn/main.css"
   },
   "files": [
     "dist/"
