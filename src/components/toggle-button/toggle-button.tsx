@@ -26,7 +26,7 @@ export class ToggleButton extends LitElement {
 
   override render(): JsxNode {
     return (
-        <div class={`flip-toggle${this.on ? " on" : ""}`} onClick={this.handleToggle} onKeyDown={this.handleToggleKeyPress} tabIndex={1} role="switch" aria-label="Toggle Button" aria-checked={this.on}>
+        <div class={`flip-toggle${this.on ? " on" : ""}`} onClick={this.handleToggle} onKeyDown={this.handleToggleKeyPress} tabIndex={1} role="switch" ariaLabel="Toggle Button" ariaChecked={this.on}>
           <div class="knob"></div>
           <span class="label on-label">On</span>
           <span class="label off-label">Off</span>
