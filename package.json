@@ -45,6 +45,7 @@
     "@arcgis/components-utils": ">=4.34.0-next <4.35.0",
     "@arcgis/lumina": ">=4.34.0-next <4.35.0",
     "@arcgis/typescript-config": "^4.32.14",
+    "prettier-config": "^1.0.0",
     "tslib": "^2.8.1"
   },
   "devDependencies": {
