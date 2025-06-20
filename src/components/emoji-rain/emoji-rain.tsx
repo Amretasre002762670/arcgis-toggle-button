@@ -1,5 +1,6 @@
 import { LitElement, h, state, property, type JsxNode } from "@arcgis/lumina";
 import { styles } from "./emoji-rain.scss";
+import { createRef } from "lit/directives/ref.js";
 
 declare global {
     interface DeclareElements {
@@ -47,7 +48,7 @@ export class EmojiRain extends LitElement {
 
     // private emoji: string[] = ['🌽', '🍇', '🍌', '🍒', '🍕', '🍷', '🍭', '💖', '💩', '🐷', '🐸', '🐳', '🎃', '🎾', '🌈', '🍦', '💁', '🔥', '😁', '😱', '🌴', '👏', '💃'];
 
-    private container!: HTMLDivElement;
+    private container= createRef<HTMLDivElement>();
 
     private circles: Circle[] = [];
 
@@ -63,7 +64,7 @@ export class EmojiRain extends LitElement {
                 <button onClick={() => this.toggleRain()}>
                     {this.rainEnable ? "Stop Rain" : "Start Rain"}
                 </button>
-                <div id="container"></div>
+                <div id="container" ref={this.container}></div>
             </div>
             
         );
@@ -75,9 +76,8 @@ export class EmojiRain extends LitElement {
 
     override updated(): void {
         setTimeout(() => {
-            const container = this.el.shadowRoot?.querySelector('#container');
+            const container = this.container.value;
             if (container) {
-                this.container = container as HTMLDivElement;
                 this.setCircles();
                 this.animateCircles();
             }
@@ -103,7 +103,7 @@ export class EmojiRain extends LitElement {
             el.className = "emoji";
             el.textContent = this.randomEmoji();
             el.style.color = `hsl(${(Math.random()*360)},80%,50%)`;
-            this.container.appendChild(el);
+            this.container.value?.appendChild(el);
             this.circles.push({ x, y, v : { x: -0.15 + Math.random() * 0.3, y: 1 + Math.random() * 1 }, range, el});
         }, delay);
     }
