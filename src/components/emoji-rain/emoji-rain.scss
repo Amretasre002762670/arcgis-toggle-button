@@ -6,9 +6,21 @@
   overflow: hidden;
   background-color: #000;
 
+  button {
+    position: absolute;
+    top: 3vh;
+    right: 3vw;
+    padding: 8px 12px;
+    background-color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+
   .emoji {
     position: absolute;
-    font-size: 26px;
+    font-size: 23px;
     opacity: 0;
     }
 }

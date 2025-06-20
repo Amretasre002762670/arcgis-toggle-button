@@ -1,4 +1,4 @@
-import { LitElement, h, property, type JsxNode } from "@arcgis/lumina";
+import { LitElement, h, state, property, type JsxNode } from "@arcgis/lumina";
 import { styles } from "./emoji-rain.scss";
 
 declare global {
@@ -19,6 +19,12 @@ export class EmojiRain extends LitElement {
     //#region Static Properties
 
     static override styles = styles;
+
+    //#endregion
+
+    //#region State Properties
+
+    @state() rainEnable = true;
 
     //#endregion
 
@@ -45,12 +51,21 @@ export class EmojiRain extends LitElement {
 
     private circles: Circle[] = [];
 
+    private animationId: number | null = null;
+    
+
     //#region Rendering
 
     override render(): JsxNode {
         console.log(this.emoji);
         return (
-            <div id="container"></div>
+            <div>
+                <button onClick={() => this.toggleRain()}>
+                    {this.rainEnable ? "Stop Rain" : "Start Rain"}
+                </button>
+                <div id="container"></div>
+            </div>
+            
         );
     }
 
@@ -80,6 +95,7 @@ export class EmojiRain extends LitElement {
 
     private addCircle (delay: number, range: [number, number]) : void {
         setTimeout(() => {
+            if (!this.rainEnable) { return; }
             const x = range[0] + Math.random() * range[1];
             const y = 80 + Math.random() * 4;
 
@@ -109,6 +125,10 @@ export class EmojiRain extends LitElement {
     }
 
     private animateCircles(): void {
+        if (!this.rainEnable) {
+            this.animationId = null;
+            return;
+        }
         this.circles.forEach((circle) => {
             circle.y += circle.v.y;
             circle.x += circle.v.x;
@@ -121,7 +141,31 @@ export class EmojiRain extends LitElement {
             circle.el.style.transform = `translate3d(${circle.x}px, ${circle.y}px, 0px)`;
 
         });
-        requestAnimationFrame(() => this.animateCircles());
+        this.animationId = requestAnimationFrame(() => this.animateCircles());
+    }
+
+    private startRain(): void {
+        this.rainEnable = true;
+        if(this.animationId == null) {
+            this.animateCircles();
+        }
+    }
+
+    private stopRain(): void {
+        this.rainEnable = false;
+        if (this.animationId != null) {
+            cancelAnimationFrame(this.animationId);
+            this.animationId = null;
+        }
+    }
+
+    private toggleRain(): void {
+        if (this.rainEnable) {
+            this.stopRain();
+        } 
+        else {
+            this.startRain();
+        }
     }
 
     //#endregion

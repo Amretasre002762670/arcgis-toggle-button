@@ -1,4 +1,4 @@
-import { LitElement, state, h, type JsxNode } from "@arcgis/lumina";
+import { LitElement, property, h, type JsxNode } from "@arcgis/lumina";
 import { styles } from "./toggle-button.scss";
 
 declare global {
@@ -15,18 +15,31 @@ export class ToggleButton extends LitElement {
 
   //#endregion
 
-  //#region State Properties
+  //#region Public Properties
 
-  @state()
-  on = false;
+  @property({
+    converter: {
+      fromAttribute(value: string | null) {
+        if (typeof value === "string") {
+          const normalized = value.trim().toLowerCase();
+          return normalized === "true" || normalized === "1" || normalized === "on";
+        }
+        return false;
+      },
+      toAttribute(value: boolean) {
+        return value ? "true" : "false";
+      }
+    }
+  }) toggleState = false;
 
   //#endregion
 
   //#region Rendering
 
   override render(): JsxNode {
+    console.log("Rendering ToggleButton", this.toggleState);
     return (
-        <div class={`flip-toggle${this.on ? " on" : ""}`} onClick={this.handleToggle} onKeyDown={this.handleToggleKeyPress} tabIndex={0} role="switch" ariaLabel="Toggle Button" ariaChecked={this.on}>
+        <div class={`flip-toggle${this.toggleState ? " on" : ""}`} onClick={this.handleToggle} onKeyDown={this.handleToggleKeyPress} tabIndex={0} role="switch" ariaLabel="Toggle Button" ariaChecked={this.toggleState}>
           <div class="knob"></div>
           <span class="label on-label">On</span>
           <span class="label off-label">Off</span>
@@ -39,9 +52,9 @@ export class ToggleButton extends LitElement {
   //#region Events
 
   private handleToggle(): void {
-    this.on = !this.on;
+    this.toggleState = !this.toggleState;
     this.el.dispatchEvent(new CustomEvent("toggle", {
-      detail: { on: this.on },
+      detail: { toggleState: this.toggleState },
       bubbles: true,
       composed: true
     }));
